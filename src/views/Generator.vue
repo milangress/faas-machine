@@ -1,10 +1,19 @@
 <template lang="pug">
   div(class="home")
-    div Gid: {{ $route.params.gid }}
-    a(:href="sheetURL") {{sheetURL}}
-    p {{currentSentence}}
+    hr
+    h1(v-on:click="animateNewSentence") {{currentSentence}}
     // ul
       li(v-for="slot in slotData[0]") {{slot}}
+    div
+      hr
+      h3 Debug info
+      p Google Sheet Gid: {{ $route.params.gid }}
+      p JSON endpoint:
+        |
+        a(:href="sheetURL") {{sheetURL}}
+      p Edit Google Sheet:
+        |
+        a(:href="sheetUrlEditable") {{sheetUrlEditable}}
 </template>
 
 <script>
@@ -19,6 +28,7 @@ export default {
   data: function () {
     return {
       sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/1/public/full?alt=json`,
+      sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
       slotData: ['1', '2', '3', '4', '5']
     }
   },
@@ -26,6 +36,20 @@ export default {
     this.loadSheet()
   },
   methods: {
+    animateNewSentence: function () {
+      const that = this
+      const mainLoopId = setInterval(function () {
+        that.randomizeSlotData()
+      }, 3)
+      window.setTimeout(() => {
+        clearInterval(mainLoopId)
+      }, 1000)
+    },
+    randomizeSlotData: function () {
+      this.slotData.forEach((slot, pos) => {
+        this.slotData.splice(pos, 1, this.shuffleArray(slot))
+      })
+    },
     loadSheet: async function () {
       const sheetData = await fetch(this.sheetURL).then(response => response.json())
       const entries = sheetData.feed.entry.filter(entry => entry.gs$cell.row !== '1')
