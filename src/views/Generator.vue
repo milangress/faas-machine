@@ -1,7 +1,10 @@
 <template lang="pug">
   div(class="home")
     hr
-    h1(v-on:click="animateNewSentence") {{currentSentence}}
+    // h1(v-on:click="animateNewSentence") {{currentSentence}}
+    h1(v-on:click="animateNewSentence")
+    |
+    span.slotPart(v-for="slot in slotData") {{slot[0]}} &#32;
     // ul
       li(v-for="slot in slotData[0]") {{slot}}
     // div
@@ -82,3 +85,8 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.slotPart:hover
+  color blue
+</style>
