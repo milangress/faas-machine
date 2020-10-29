@@ -6,7 +6,7 @@
     h1(v-on:click="animateNewSentence")
     |
     span(v-for="slot in slotData" :key="slot")
-      SentencePart(:sentencesArray="slot")
+      SentencePart(:sentencesArray="slot" :bus="bus")
     // ul
       li(v-for="slot in slotData[0]") {{slot}}
     // div
@@ -25,6 +25,7 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import SentencePart from '@/components/SentencePart'
+import Vue from 'vue'
 
 export default {
   name: 'Home',
@@ -36,7 +37,8 @@ export default {
     return {
       sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/1/public/full?alt=json`,
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
-      slotData: ['1', '2', '3', '4', '5']
+      slotData: ['1', '2', '3', '4', '5'],
+      bus: new Vue()
     }
   },
   mounted () {
@@ -44,7 +46,7 @@ export default {
   },
   methods: {
     changeWholeSentence: function () {
-      SentencePart.$emit('newSentence')
+      this.bus.$emit('newSentence')
     },
     animateNewSentence: function () {
       const that = this

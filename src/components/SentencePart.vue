@@ -8,7 +8,8 @@
 export default {
   name: 'SentencePart',
   props: {
-    sentencesArray: Array
+    sentencesArray: Array,
+    bus: Object
   },
   data: function () {
     return {
@@ -16,7 +17,7 @@ export default {
     }
   },
   created () {
-    this.$on('newSentence', (data) => {
+    this.bus.$on('newSentence', (data) => {
       this.animateNewSentence()
     })
   },
@@ -31,7 +32,7 @@ export default {
       }, 500)
     },
     randomizeSlotData: function () {
-      this.newSentenceArray = this.shuffleArray(this.newSentenceArray)
+      this.newSentenceArray = this.shuffleArray(this.sentencesArray)
     },
     shuffleArray: function (arrParam) {
       const arr = arrParam.slice()
