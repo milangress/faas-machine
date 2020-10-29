@@ -1,10 +1,12 @@
 <template lang="pug">
   div(class="home")
+    button(v-on:click="changeWholeSentence") NEW
     hr
     // h1(v-on:click="animateNewSentence") {{currentSentence}}
     h1(v-on:click="animateNewSentence")
     |
-    span.slotPart(v-for="slot in slotData") {{slot[0]}} &#32;
+    span(v-for="slot in slotData" :key="slot")
+      SentencePart(:sentencesArray="slot")
     // ul
       li(v-for="slot in slotData[0]") {{slot}}
     // div
@@ -22,11 +24,13 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import SentencePart from '@/components/SentencePart'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    HelloWorld,
+    SentencePart
   },
   data: function () {
     return {
@@ -39,6 +43,9 @@ export default {
     this.loadSheet()
   },
   methods: {
+    changeWholeSentence: function () {
+      SentencePart.$emit('newSentence')
+    },
     animateNewSentence: function () {
       const that = this
       const mainLoopId = setInterval(function () {
