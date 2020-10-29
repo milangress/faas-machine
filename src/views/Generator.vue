@@ -3,10 +3,9 @@
     button(v-on:click="changeWholeSentence") NEW
     hr
     // h1(v-on:click="animateNewSentence") {{currentSentence}}
-    h1(v-on:click="animateNewSentence")
-    |
-    span(v-for="slot in slotData" :key="slot")
-      SentencePart(:sentencesArray="slot" :bus="bus")
+    h1
+      span(v-for="slot in slotData" :key="slot")
+        SentencePart(:sentencesArray="slot" :bus="bus")
     // ul
       li(v-for="slot in slotData[0]") {{slot}}
     // div
