@@ -4,7 +4,7 @@
     h1(v-on:click="animateNewSentence") {{currentSentence}}
     // ul
       li(v-for="slot in slotData[0]") {{slot}}
-    div
+    // div
       hr
       h3 Debug info
       p Google Sheet Gid: {{ $route.params.gid }}
