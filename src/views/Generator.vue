@@ -95,7 +95,7 @@ export default {
 
 <style lang="stylus">
 .home
-  margin 0 5rem
+  margin 0 3vw
 .slotPart:hover
   color blue
 .button
