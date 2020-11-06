@@ -1,9 +1,8 @@
 <template lang="pug">
   div(class="home")
-    button(v-on:click="changeWholeSentence") NEW
-    hr
+    div.button(v-on:click="changeWholeSentence") Make new Sentence…
     // h1(v-on:click="animateNewSentence") {{currentSentence}}
-    h1
+    h1.Sentence
       span(v-for="slot in slotData" :key="slot")
         SentencePart(:sentencesArray="slot" :bus="bus")
     // ul
@@ -95,6 +94,19 @@ export default {
 </script>
 
 <style lang="stylus">
+.home
+  margin 0 5rem
 .slotPart:hover
   color blue
+.button
+  padding 0.5rem
+  font-size 2vw
+  border 3px solid blue
+  cursor pointer
+.button:hover
+  border 3px solid none
+  background blue
+  color white
+.Sentence
+  font-size 7vw
 </style>
