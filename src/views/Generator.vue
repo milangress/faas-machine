@@ -104,7 +104,7 @@ export default {
   border 3px solid blue
   cursor pointer
 .button:hover
-  border 3px solid none
+  border 3px solid white
   background blue
   color white
 .Sentence
