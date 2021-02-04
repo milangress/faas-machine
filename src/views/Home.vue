@@ -1,14 +1,23 @@
 <template lang="pug">
   div(class="home")
-    router-link.button(to='/gen/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU') Make new Sentence…
+    div(v-for="sheetID in availableSheetIDs")
+      sheet-preview-overview(:sheetID="sheetID")
+    input(type="text")
 </template>
 
 <script>
 // @ is an alias to /src
+import sheetPreviewOverview from '@/components/sheetPreviewOverview'
 
 export default {
   name: 'Home',
   components: {
+    sheetPreviewOverview
+  },
+  data: function () {
+    return {
+      availableSheetIDs: ['1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU', '2TestLink']
+    }
   }
 }
 </script>
