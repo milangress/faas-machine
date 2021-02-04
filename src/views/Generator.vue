@@ -35,7 +35,7 @@ export default {
     return {
       sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/1/public/full?alt=json`,
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
-      slotData: ['1', '2', '3', '4', '5'],
+      slotData: [['Loading'], ['…'], ['3'], ['4'], ['5'], ['6']],
       bus: new Vue()
     }
   },
