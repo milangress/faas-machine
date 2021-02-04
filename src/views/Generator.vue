@@ -3,7 +3,7 @@
     div.button(v-on:click="changeWholeSentence") Make new Sentence…
     // h1(v-on:click="animateNewSentence") {{currentSentence}}
     h1.Sentence
-      span(v-for="slot in slotData" :key="slot")
+      span(v-for="slot in slotData")
         SentencePart(:sentencesArray="slot" :bus="bus")
     // ul
       li(v-for="slot in slotData[0]") {{slot}}
