@@ -5,6 +5,8 @@ div(class="home")
   h1.Sentence
     span(v-for='slot in slotData')
       SentencePart(:sentencesArray="slot" :bus="bus")
+      |
+      span.wordSpace &#32;&#8203;
   // ul
     li(v-for="slot in slotData[0]") {{slot}}
   // div
