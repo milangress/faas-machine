@@ -5,11 +5,12 @@
 </template>
 
 <script>
+const emitter = require('tiny-emitter/instance')
+
 export default {
   name: 'SentencePart',
   props: {
-    sentencesArray: Array,
-    bus: Object
+    sentencesArray: Array
   },
   data: function () {
     return {
@@ -17,7 +18,7 @@ export default {
     }
   },
   created () {
-    this.bus.$on('newSentence', (data) => {
+    emitter.on('newSentence', (data) => {
       this.animateNewSentence()
     })
   },

@@ -23,8 +23,8 @@ div(class="home")
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import SentencePart from '@/components/SentencePart'
-import { createApp } from 'vue'
-import App from '../App.vue'
+
+const emitter = require('tiny-emitter/instance')
 
 export default {
   name: 'Home',
@@ -36,8 +36,7 @@ export default {
     return {
       sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/1/public/full?alt=json`,
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
-      slotData: [['Loading', '…'], ['…', 'Loading']],
-      bus: createApp(App)
+      slotData: [['Loading', '…'], ['…', 'Loading']]
     }
   },
   mounted () {
@@ -45,7 +44,7 @@ export default {
   },
   methods: {
     changeWholeSentence: function () {
-      this.bus.$emit('newSentence')
+      emitter.emit('newSentence')
     },
     animateNewSentence: function () {
       const that = this
