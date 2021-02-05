@@ -30,6 +30,6 @@
     "eslint-plugin-vue": "^7.0.0-alpha.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
-    "vue-cli-plugin-pug": "~1.0.7"
+    "vue-cli-plugin-pug": "^2.0.0"
   }
 }
