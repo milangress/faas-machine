@@ -63,12 +63,16 @@ export default {
     loadSheet: async function () {
       const sheetData = await fetch(this.sheetURL).then(response => response.json())
       const entries = sheetData.feed.entry.filter(entry => entry.gs$cell.row !== '1')
+      const numberOfValidRows = [...new Set(entries.map(entry => entry.gs$cell.col))]
+      numberOfValidRows.forEach((item, pos) => {
+        this.slotData.splice(pos, 1, item)
+      })
       this.slotData.forEach((slot, pos) => {
         const filteredSlot = entries.filter(entry => entry.gs$cell.col === slot).map(entry => entry.content.$t)
         // Using Splice so vue can detect the changes
         this.slotData.splice(pos, 1, this.shuffleArray(filteredSlot))
       })
-      console.log(this.slotData)
+      this.changeWholeSentence()
     },
     shuffleArray: function (arrParam) {
       const arr = arrParam.slice()
