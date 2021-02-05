@@ -1,29 +1,30 @@
 <template lang="pug">
-  div(class="home")
-    div.button(v-on:click="changeWholeSentence") Make new Sentence…
-    // h1(v-on:click="animateNewSentence") {{currentSentence}}
-    h1.Sentence
-      span(v-for='slot in slotData')
-        SentencePart(:sentencesArray="slot" :bus="bus")
-    // ul
-      li(v-for="slot in slotData[0]") {{slot}}
-    // div
-      hr
-      h3 Debug info
-      p Google Sheet Gid: {{ $route.params.gid }}
-      p JSON endpoint:
-        |
-        a(:href="sheetURL") {{sheetURL}}
-      p Edit Google Sheet:
-        |
-        a(:href="sheetUrlEditable") {{sheetUrlEditable}}
+div(class="home")
+  div.button(v-on:click="changeWholeSentence") Make new Sentence…
+  // h1(v-on:click="animateNewSentence") {{currentSentence}}
+  h1.Sentence
+    span(v-for='slot in slotData')
+      SentencePart(:sentencesArray="slot" :bus="bus")
+  // ul
+    li(v-for="slot in slotData[0]") {{slot}}
+  // div
+    hr
+    h3 Debug info
+    p Google Sheet Gid: {{ $route.params.gid }}
+    p JSON endpoint:
+      |
+      a(:href="sheetURL") {{sheetURL}}
+    p Edit Google Sheet:
+      |
+      a(:href="sheetUrlEditable") {{sheetUrlEditable}}
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import SentencePart from '@/components/SentencePart'
-import Vue from 'vue'
+import { createApp } from 'vue'
+import App from '../App.vue'
 
 export default {
   name: 'Home',
@@ -36,7 +37,7 @@ export default {
       sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/1/public/full?alt=json`,
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
       slotData: [['Loading', '…'], ['…', 'Loading']],
-      bus: new Vue()
+      bus: createApp(App)
     }
   },
   mounted () {

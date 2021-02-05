@@ -1,8 +1,8 @@
 <template lang="pug">
-  div(class="home")
-    div(v-for="sheetID in availableSheetIDs")
-      sheet-preview-overview(:sheetID="sheetID")
-    input(type="text")
+div(class="home")
+  div(v-for="sheetID in availableSheetIDs")
+    sheet-preview-overview(:sheetID="sheetID")
+  input(type="text")
 </template>
 
 <script>

@@ -1,9 +1,9 @@
 <template lang="pug">
-  #app
-    #nav
-      // router-link(to='/') Home
-      // router-link(to='/gen/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU') Gen
-    router-view
+#app
+  #nav
+    // router-link(to='/') Home
+    // router-link(to='/gen/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU') Gen
+  router-view
 </template>
 
 <style lang="stylus">
