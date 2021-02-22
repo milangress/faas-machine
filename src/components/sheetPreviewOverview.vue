@@ -1,10 +1,10 @@
 <template lang="pug">
 div.wrapper
   router-link.button(:to="internalPathToSheet") Make new Sentence…
-  p {{sheetID}}
-  a {{externalSheetURL}}
-  br
-  a {{externalSheetJSONUrl}}
+  // p {{sheetID}}
+  // a {{externalSheetURL}}
+  // br
+  // a {{externalSheetJSONUrl}}
 </template>
 
 <script>

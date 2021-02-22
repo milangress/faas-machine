@@ -2,7 +2,7 @@
 div(class="home")
   div(v-for="sheetID in availableSheetIDs")
     sheet-preview-overview(:sheetID="sheetID")
-  input(type="text")
+  // input(type="text")
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   },
   data: function () {
     return {
-      availableSheetIDs: ['1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU', '2TestLink']
+      availableSheetIDs: ['1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU']
     }
   }
 }
