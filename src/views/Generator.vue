@@ -36,7 +36,7 @@ export default {
   },
   data: function () {
     return {
-      sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/1/public/full?alt=json`,
+      sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/${this.$route.params.sheet}/public/full?alt=json`,
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
       slotData: [['Loading', '…'], ['…', 'Loading']]
     }
@@ -94,6 +94,11 @@ export default {
     currentSentence: function () {
       const sentenceArray = this.slotData.map(slot => slot[0])
       return sentenceArray.join(' ')
+    },
+    gSheetID: function () {
+      const gSheetId = this.$route.params.sheetId
+      // return Object.is(gSheetId, undefined) ? 1 : gSheetId
+      return gSheetId
     }
   }
 }
