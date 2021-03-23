@@ -9,7 +9,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/gen/:gid',
+    path: '/gen/:gid/:sheetId',
     name: 'Generator',
     component: Generator
   },
