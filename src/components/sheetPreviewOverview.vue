@@ -1,6 +1,8 @@
 <template lang="pug">
 div.wrapper
-  h2 Google Sheet ID: {{sheetID}}
+  h2 Google Sheet ID: &nbsp;
+    |
+    a(:href="externalSheetURL") {{sheetID}}
   div(v-for="subSheet in numberOfSubSheets")
     router-link.button(:to="makePath(subSheet.id)") {{subSheet.title}}
       br
@@ -41,8 +43,6 @@ export default {
         const title = sheetData.feed.title.$t
         const headers = sheetData.feed.entry.filter(entry => entry.gs$cell.row === '2')
         const headersContent = headers.map(entry => entry.gs$cell.$t)
-        console.log(headers)
-        console.log(title)
         this.numberOfSubSheets.push({
           id: subSheetId,
           title: title,
@@ -50,7 +50,6 @@ export default {
         })
         await this.loadAvailableSubSheets(subSheetId + 1)
       }
-      console.log(getResults)
     },
     externalSheetJsonUrl: function (sheetID, subSheetID = 1) {
       return `https://spreadsheets.google.com/feeds/cells/${sheetID}/${subSheetID}/public/full?alt=json`
