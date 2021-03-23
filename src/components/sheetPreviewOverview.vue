@@ -1,6 +1,6 @@
 <template lang="pug">
 div.wrapper
-  h2 Google Sheet ID: &nbsp;
+  h2 Google Sheet: &nbsp;
     |
     a(:href="externalSheetURL") {{sheetID}}
   div(v-for="subSheet in numberOfSubSheets")
