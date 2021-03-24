@@ -8,6 +8,7 @@ div.wrapper
       br
       br
       | {{subSheet.headers}}
+  pulse-loader(:loading="loading" color="blue" :size="size")
     // router-link.button(:to="{ name: 'user', params: { gid: sheetID}}") Make new Sentence…
     // router-link.button(:to="{ name: 'user', params: { gid: sheetID, sheet: subSheet}}") Make new Sentence…
     // p {{sheetID}}
@@ -18,14 +19,18 @@ div.wrapper
 </template>
 
 <script>
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
 export default {
   name: 'sheetPreviewOverview',
+  components: { PulseLoader },
   props: {
     sheetID: String
   },
   data: function () {
     return {
-      numberOfSubSheets: []
+      numberOfSubSheets: [],
+      loading: true
     }
   },
   mounted () {
@@ -49,6 +54,8 @@ export default {
           headers: headersContent.join(' ')
         })
         await this.loadAvailableSubSheets(subSheetId + 1)
+      } else {
+        this.loading = false
       }
     },
     externalSheetJsonUrl: function (sheetID, subSheetID = 1) {
