@@ -1,6 +1,6 @@
 <template lang="pug">
 div.wrapper
-  h2 Google Sheet: &nbsp;
+  h2 Google Sheet bearbeiten: &nbsp;
     |
     a(:href="externalSheetURL") {{sheetID}}
   div(v-for="subSheet in numberOfSubSheets")
@@ -77,9 +77,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.wrapper
+  margin-top 4rem
 .button
   margin-bottom 1rem
   text-decoration none
 .button:visited
-  color initial
+  color blue
+.button:hover
+  color white
 </style>

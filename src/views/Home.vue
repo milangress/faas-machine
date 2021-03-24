@@ -16,7 +16,7 @@ export default {
   },
   data: function () {
     return {
-      availableSheetIDs: ['1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU']
+      availableSheetIDs: ['1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU', '1AdYfrX9OpILVz37kP6lV-1rWIInUhMu9qCwkFCQC69k']
     }
   }
 }
