@@ -4,10 +4,10 @@ div.wrapper
     |
     a(:href="externalSheetURL") {{sheetID}}
   div(v-for="subSheet in numberOfSubSheets")
-    router-link.button(:to="makePath(subSheet.id)") {{subSheet.title}}
-      br
-      br
-      | {{subSheet.headers}}
+    router-link.button(:to="makePath(subSheet.title)") {{subSheet.title}}
+      //br
+      //br
+      //| {{subSheet.title}}
   pulse-loader(:loading="loading" color="blue" :size="size")
     // router-link.button(:to="{ name: 'user', params: { gid: sheetID}}") Make new Sentence…
     // router-link.button(:to="{ name: 'user', params: { gid: sheetID, sheet: subSheet}}") Make new Sentence…
@@ -34,11 +34,27 @@ export default {
     }
   },
   mounted () {
-    this.loadAvailableSubSheets()
+    this.getSubSheets()
+    // this.loadAvailableSubSheets()
   },
   methods: {
     makePath: function (subSheet) {
       return `/gen/${this.sheetID}/${subSheet}`
+    },
+    getSubSheets: async function () {
+      const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${this.sheetID}?key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`
+      const getResults = await fetch(sheetUrl).then(response => response.json())
+      console.log(getResults)
+      getResults.sheets.forEach((sheet) => {
+        this.numberOfSubSheets.push({
+          id: sheet.properties.sheetId,
+          title: sheet.properties.title
+        })
+      })
+      window.setTimeout(this.endLoading, 1000)
+    },
+    endLoading: function () {
+      this.loading = false
     },
     loadAvailableSubSheets: async function (subSheetId = 1) {
       const sheetURL = this.externalSheetJsonUrl(this.sheetID, subSheetId)
@@ -77,6 +93,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+h2
+  text-align right
 .wrapper
   margin-top 4rem
 .button

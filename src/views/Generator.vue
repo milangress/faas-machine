@@ -36,7 +36,8 @@ export default {
   },
   data: function () {
     return {
-      sheetURL: `https://spreadsheets.google.com/feeds/cells/${this.$route.params.gid}/${this.$route.params.sheet}/public/full?alt=json`,
+      sheetURL: `https://sheets.googleapis.com/v4/spreadsheets/${this.$route.params.gid}/values/${this.$route.params.sheet}!A1:E1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`,
+      // https://sheets.googleapis.com/v4/spreadsheets/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU/values/BA%20FaaS%20Maschine!A1:E1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
       slotData: [['Loading', '…'], ['…', 'Loading']]
     }
@@ -64,17 +65,25 @@ export default {
     },
     loadSheet: async function () {
       const sheetData = await fetch(this.sheetURL).then(response => response.json())
-      const entries = sheetData.feed.entry.filter(entry => entry.gs$cell.row !== '1')
-      const numberOfValidRows = [...new Set(entries.map(entry => entry.gs$cell.col))]
-      numberOfValidRows.forEach((item, pos) => {
-        this.slotData.splice(pos, 1, item)
-      })
-      this.slotData.forEach((slot, pos) => {
-        const filteredSlot = entries.filter(entry => entry.gs$cell.col === slot).map(entry => entry.content.$t)
-        // Using Splice so vue can detect the changes
-        this.slotData.splice(pos, 1, this.shuffleArray(filteredSlot))
+      console.table(sheetData.values)
+      const removedHeadline = sheetData.values.map(column => column.slice(1))
+      console.log(removedHeadline)
+      this.slotData = []
+      removedHeadline.forEach((column, pos) => {
+        this.slotData.splice(pos, 1, this.shuffleArray(column))
       })
       this.changeWholeSentence()
+      // const entries = sheetData.feed.entry.filter(entry => entry.gs$cell.row !== '1')
+      // const numberOfValidRows = [...new Set(entries.map(entry => entry.gs$cell.col))]
+      // numberOfValidRows.forEach((item, pos) => {
+      //   this.slotData.splice(pos, 1, item)
+      // })
+      // this.slotData.forEach((slot, pos) => {
+      //   const filteredSlot = entries.filter(entry => entry.gs$cell.col === slot).map(entry => entry.content.$t)
+      //   // Using Splice so vue can detect the changes
+      //   this.slotData.splice(pos, 1, this.shuffleArray(filteredSlot))
+      // })
+      // this.changeWholeSentence()
     },
     shuffleArray: function (arrParam) {
       const arr = arrParam.slice()
