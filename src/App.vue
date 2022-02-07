@@ -1,5 +1,6 @@
 <template lang="pug">
 #app
+  SVGGrainTest
   #nav
     // router-link(to='/') Home
     // router-link(to='/gen/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU') Gen
@@ -22,3 +23,9 @@
   color #000
   margin-top 60px
 </style>
+<script>
+import SVGGrainTest from '@/components/SVGGrainTest'
+export default {
+  components: { SVGGrainTest }
+}
+</script>

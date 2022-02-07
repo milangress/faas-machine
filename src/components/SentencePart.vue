@@ -54,5 +54,9 @@ export default {
 
 <style scoped lang="stylus">
 .sentence-part:hover
-  color blue
+  //color blue
+  color: white
+  text-stroke 0.01px black
+  -webkit-text-stroke: 0.01px black;
+  //text-shadow 0px 0px 3px black
 </style>

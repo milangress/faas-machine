@@ -129,4 +129,5 @@ export default {
   color white
 .Sentence
   font-size 7vw
+  filter: url(#displacementFilter)
 </style>
