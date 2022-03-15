@@ -1,5 +1,6 @@
 <template lang="pug">
 div(class="home")
+  EditGoogleSheetIFrame
   div(v-for="sheetID in availableSheetIDs")
     sheet-preview-overview(:sheetID="sheetID")
   // input(type="text")
@@ -8,10 +9,12 @@ div(class="home")
 <script>
 // @ is an alias to /src
 import sheetPreviewOverview from '@/components/sheetPreviewOverview'
+import EditGoogleSheetIFrame from '@/components/EditGoogleSheetIFrame'
 
 export default {
   name: 'Home',
   components: {
+    EditGoogleSheetIFrame,
     sheetPreviewOverview
   },
   data: function () {
