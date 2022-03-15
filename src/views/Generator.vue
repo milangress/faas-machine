@@ -1,12 +1,14 @@
 <template lang="pug">
 div(class="home")
+  router-link(to="/overview") List FaaS Machines
   div.button(v-on:click="changeWholeSentence") Make new Sentence…
   // h1(v-on:click="animateNewSentence") {{currentSentence}}
-  h1.Sentence
-    span(v-for='slot in slotData')
-      SentencePart(:sentencesArray="slot" :bus="bus")
-      |
-      span.wordSpace &#32;&#8203;
+  .sentence_wrapper
+    h1.Sentence
+      span(v-for='slot in slotData')
+        SentencePart(:sentencesArray="slot" :bus="bus")
+        |
+        span.wordSpace &#32;&#8203;
   // ul
     li(v-for="slot in slotData[0]") {{slot}}
   // div
@@ -129,5 +131,7 @@ export default {
   color white
 .Sentence
   font-size 7vw
+.sentence_wrapper
   filter: url(#displacementFilter)
+
 </style>
