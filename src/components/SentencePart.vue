@@ -1,5 +1,5 @@
 <template>
-  <span v-on:click="animateNewSentence" class="sentence-part">
+  <span v-on:click="animateNewSentence" :class="isSingleClassObject">
     {{newSentenceArray[0]}}
   </span>
 </template>
@@ -21,6 +21,15 @@ export default {
     emitter.on('newSentence', (data) => {
       this.animateNewSentence()
     })
+  },
+  computed: {
+    isSingleClassObject () {
+      return {
+        isSingle: this.sentencesArray.length <= 1,
+        canChange: this.sentencesArray.length > 1,
+        'sentence-part': true
+      }
+    }
   },
   methods: {
     animateNewSentence: function () {
@@ -53,10 +62,14 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.sentence-part:hover
+.canChange:hover
   //color blue
   color: white
   text-stroke 0.01px black
   -webkit-text-stroke: 0.01px black;
+  cursor pointer
   //text-shadow 0px 0px 3px black
+.isSingle
+  color rgb(20,20,20)
+  cursor not-allowed
 </style>
