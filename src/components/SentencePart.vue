@@ -70,6 +70,6 @@ export default {
   cursor pointer
   //text-shadow 0px 0px 3px black
 .isSingle
-  color rgb(20,20,20)
+  //color rgb(20,20,20)
   cursor not-allowed
 </style>
