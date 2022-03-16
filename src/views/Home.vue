@@ -1,6 +1,6 @@
 <template lang="pug">
 div(class="home")
-  EditGoogleSheetIFrame
+  //EditGoogleSheetIFrame
   div(v-for="sheetID in availableSheetIDs")
     sheet-preview-overview(:sheetID="sheetID")
   // input(type="text")

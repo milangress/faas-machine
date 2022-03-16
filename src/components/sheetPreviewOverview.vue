@@ -5,6 +5,7 @@ div.wrapper
     a(:href="externalSheetURL") {{sheetID}}
   div(v-for="subSheet in numberOfSubSheets")
     router-link.button(:to="makePath(subSheet.title)") {{subSheet.title}}
+    EditGoogleSheetIFrame(:sheet-i-d="sheetID" :gid="subSheet.id" )
       //br
       //br
       //| {{subSheet.title}}
@@ -20,10 +21,11 @@ div.wrapper
 
 <script>
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import EditGoogleSheetIFrame from '@/components/EditGoogleSheetIFrame'
 
 export default {
   name: 'sheetPreviewOverview',
-  components: { PulseLoader },
+  components: { EditGoogleSheetIFrame, PulseLoader },
   props: {
     sheetID: String
   },
