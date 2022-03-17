@@ -1,11 +1,12 @@
 <template lang="pug">
-div.wrapper
-  h2 Google Sheet bearbeiten: &nbsp;
-    |
-    a(:href="externalSheetURL") {{sheetID}}
+section.wrapper
+  //h2 {{sheetJson.properties.title}}
+  termplate(v-if="!loading" )
+    h2 {{sheetJson.properties.title}} &nbsp;
+      |
+      a(:href="externalSheetURL") {{sheetID}}
   div(v-for="subSheet in numberOfSubSheets")
-    router-link.button(:to="makePath(subSheet.title)") {{subSheet.title}}
-    EditGoogleSheetIFrame(:sheet-i-d="sheetID" :gid="subSheet.id" )
+    SheetPreviewItem(:sheetID="sheetID" :subSheet="subSheet")
       //br
       //br
       //| {{subSheet.title}}
@@ -21,18 +22,19 @@ div.wrapper
 
 <script>
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-import EditGoogleSheetIFrame from '@/components/EditGoogleSheetIFrame'
+import SheetPreviewItem from '@/components/SheetPreviewItem'
 
 export default {
   name: 'sheetPreviewOverview',
-  components: { EditGoogleSheetIFrame, PulseLoader },
+  components: { SheetPreviewItem, PulseLoader },
   props: {
     sheetID: String
   },
   data: function () {
     return {
       numberOfSubSheets: [],
-      loading: true
+      loading: true,
+      sheetJson: {}
     }
   },
   mounted () {
@@ -40,9 +42,6 @@ export default {
     // this.loadAvailableSubSheets()
   },
   methods: {
-    makePath: function (subSheet) {
-      return `/gen/${this.sheetID}/${subSheet}`
-    },
     getSubSheets: async function () {
       const sheetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${this.sheetID}?key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`
       const getResults = await fetch(sheetUrl).then(response => response.json())
@@ -53,6 +52,7 @@ export default {
           title: sheet.properties.title
         })
       })
+      this.sheetJson = getResults
       window.setTimeout(this.endLoading, 1000)
     },
     endLoading: function () {
@@ -96,14 +96,8 @@ export default {
 
 <style lang="stylus" scoped>
 h2
-  text-align right
+  text-align left
+  overflow-wrap: break-word;
 .wrapper
   margin-top 4rem
-.button
-  margin-bottom 1rem
-  text-decoration none
-.button:visited
-  color blue
-.button:hover
-  color white
 </style>

@@ -23,8 +23,9 @@ export default {
 <style scoped lang="stylus">
 .iframeWrapper
   width: 100%
+  height 100%
   iframe
     width: 100%
-    min-height: 50vh
+    height: inherit
     border: 3px solid blue
 </style>
