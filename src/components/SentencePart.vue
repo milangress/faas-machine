@@ -71,6 +71,6 @@ export default {
   //text-shadow 0px 0px 3px black
 .isSingle
   //color rgb(20,20,20)
-  background yellow
+  //background yellow
   cursor not-allowed
 </style>
