@@ -41,29 +41,24 @@ export default {
       sheetURL: `https://sheets.googleapis.com/v4/spreadsheets/${this.$route.params.gid}/values/${this.$route.params.sheet}!A1:Z1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`,
       // https://sheets.googleapis.com/v4/spreadsheets/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU/values/BA%20FaaS%20Maschine!A1:E1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
-      slotData: [['Loading', '…'], ['…', 'Loading']]
+      slotData: [['Loading', '…'], ['…', 'Loading']],
+      oldSentence: undefined
     }
   },
   mounted () {
     this.loadSheet()
     emitter.on('commitNewSentencePart', (pos, SentencePart) => {
       console.log(pos, SentencePart)
+      window.setTimeout(() => {
+        this.commitNewSentenceIntoArchive()
+      }, 200)
     })
   },
   methods: {
     changeWholeSentence: function () {
-      const that = this
       emitter.emit('newSentence')
       window.setTimeout(() => {
-        const text = that.$refs.sentenceEl.innerText
-        console.log(text)
-        fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdeEI7TtUBkFGls8tRSGn157ibcJV4Nzhbo9FQprURg-W1Q7g/formResponse', {
-          method: 'POST',
-          body: new URLSearchParams({
-            'entry.835154031': text,
-            'entry.1283552648': window.location.href
-          })
-        })
+        this.commitNewSentenceIntoArchive()
       }, 600)
     },
     animateNewSentence: function () {
@@ -114,6 +109,20 @@ export default {
         arr[i] = temp
       }
       return arr
+    },
+    commitNewSentenceIntoArchive () {
+      const text = this.$refs.sentenceEl.innerText
+      console.log(text)
+      if (this.oldSentence !== text) {
+        fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdeEI7TtUBkFGls8tRSGn157ibcJV4Nzhbo9FQprURg-W1Q7g/formResponse', {
+          method: 'POST',
+          body: new URLSearchParams({
+            'entry.835154031': text,
+            'entry.1283552648': window.location.href
+          })
+        })
+      }
+      this.oldSentence = text
     }
   },
   computed: {
