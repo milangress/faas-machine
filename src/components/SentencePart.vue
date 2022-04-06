@@ -10,7 +10,8 @@ const emitter = require('tiny-emitter/instance')
 export default {
   name: 'SentencePart',
   props: {
-    sentencesArray: Array
+    sentencesArray: Array,
+    pos: String
   },
   data: function () {
     return {
@@ -39,6 +40,8 @@ export default {
       }, 3)
       window.setTimeout(() => {
         clearInterval(mainLoopId)
+        console.log(that)
+        emitter.emit('commitNewSentencePart', `pos ${that.$attrs.pos}`, `SentencePart ${that.newSentenceArray[0]}`)
       }, 500)
     },
     randomizeSlotData: function () {

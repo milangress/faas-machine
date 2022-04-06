@@ -4,9 +4,9 @@ div(class="home")
   div.button(v-on:click="changeWholeSentence") Make new Sentence…
   // h1(v-on:click="animateNewSentence") {{currentSentence}}
   .sentence_wrapper
-    h1.Sentence
-      span(v-for='slot in slotData')
-        SentencePart(:sentencesArray="slot" :bus="bus")
+    h1.Sentence(ref="sentenceEl")
+      span(v-for='(slot, pos) in slotData')
+        SentencePart(:sentencesArray="slot" :bus="bus" :pos:="pos")
         |
         span.wordSpace &#32;&#8203;
   // ul
@@ -46,10 +46,25 @@ export default {
   },
   mounted () {
     this.loadSheet()
+    emitter.on('commitNewSentencePart', (pos, SentencePart) => {
+      console.log(pos, SentencePart)
+    })
   },
   methods: {
     changeWholeSentence: function () {
+      const that = this
       emitter.emit('newSentence')
+      window.setTimeout(() => {
+        const text = that.$refs.sentenceEl.innerText
+        console.log(text)
+        fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdeEI7TtUBkFGls8tRSGn157ibcJV4Nzhbo9FQprURg-W1Q7g/formResponse', {
+          method: 'POST',
+          body: new URLSearchParams({
+            'entry.835154031': text,
+            'entry.1283552648': window.location.href
+          })
+        })
+      }, 600)
     },
     animateNewSentence: function () {
       const that = this
