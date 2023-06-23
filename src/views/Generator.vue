@@ -1,6 +1,8 @@
 <template lang="pug">
 div(class="home")
-  router-link(to="/overview") List FaaS Machines
+  p.intro Die *FAAS-Maschine (<i>Future as a Service</i> Machine🡢von Software as a Service) ist ein Werkzeug, das zufällige Sätze für Denkprozesse generiert oder fiktive *Alternativen* präsentiert. Sie basiert auf der Untersuchung von Glücksspiel als zeitgenössischem Phänomen und ist einem Glücksspielautomaten nachempfunden. 🡢
+    |
+    router-link(to="/overview") Show other FaaS Machines
   div.button(v-on:click="changeWholeSentence") Make new Sentence…
   // h1(v-on:click="animateNewSentence") {{currentSentence}}
   .sentence_wrapper
@@ -140,6 +142,11 @@ export default {
 </script>
 
 <style lang="stylus">
+.intro
+  font-size 1.5vw
+  max-width 70vw
+  font-family 'Garamondt'
+  margin-bottom 1vw
 .home
   margin 0 3vw
 .slotPart:hover
@@ -149,13 +156,14 @@ export default {
   font-size 2vw
   border 3px solid blue
   cursor pointer
+  margin-block 1rem
 .button:hover
   border 3px solid white
   background blue
   color white
 .Sentence
-  font-size 7vw
+  font-size: 7vw
+  margin-block-start: 0
 .sentence_wrapper
   filter: url(#displacementFilter)
-
 </style>

@@ -14,14 +14,26 @@
     url('/fonts/oraclegm-regularmono-webfont-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
-#app
-  font-family oracle, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  color #000
-  margin-top 60px
+@font-face {
+  font-family: 'Garamondt';
+  src: url('/fonts/Garamondt-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Garamondt';
+  src: url('/fonts/Garamondt-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+#app {
+  font-family: oracle, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #000 margin-top 60px;
+}
 </style>
 <script>
 import SVGGrainTest from '@/components/SVGGrainTest'
