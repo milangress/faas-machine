@@ -1,17 +1,18 @@
 <template lang="pug">
 div(class="home")
   div.main
-    p.intro Die *FAAS-Maschine (<i>Future as a Service</i> Machine🡢von Software as a Service) ist ein Werkzeug, das zufällige Sätze für Denkprozesse generiert oder fiktive *Alternativen* präsentiert. Sie basiert auf der Untersuchung von Glücksspiel als zeitgenössischem Phänomen und ist einem Glücksspielautomaten nachempfunden. 🡢
-      |
-      router-link(to="/overview") Show other FaaS Machines
+    router-link(to="/overview") Show other FaaS Machines
     div.button(v-on:click="changeWholeSentence") Make new Sentence…
     // h1(v-on:click="animateNewSentence") {{currentSentence}}
-    .sentence_wrapper
-      h1.Sentence(ref="sentenceEl")
-        span(v-for='(slot, pos) in slotData')
-          SentencePart(:sentencesArray="slot" :bus="bus" :pos:="pos")
-          |
-          span.wordSpace &#32;&#8203;
+    //.sentence_wrapper
+    //  h1.Sentence(ref="sentenceEl")
+    //    span(v-for='(slot, pos) in slotData')
+    //      SentencePart(:sentencesArray="slot" :bus="bus" :pos:="pos")
+    //      |
+    //      span.wordSpace &#32;&#8203;
+    div(v-for='(sentence) in allSentences')
+      p {{sentence.join(' ')}}
+      hr
   //hr
   //details
   //  summary All Sentences
@@ -37,7 +38,7 @@ div(class="home")
 import HelloWorld from '@/components/HelloWorld.vue'
 import SentencePart from '@/components/SentencePart'
 
-const emitter = require('tiny-emitter/instance')
+// const emitter = require('tiny-emitter/instance')
 
 export default {
   name: 'Home',
@@ -56,19 +57,10 @@ export default {
   },
   mounted () {
     this.loadSheet()
-    emitter.on('commitNewSentencePart', (pos, SentencePart) => {
-      console.log(pos, SentencePart)
-      window.setTimeout(() => {
-        this.commitNewSentenceIntoArchive()
-      }, 200)
-    })
   },
   methods: {
     changeWholeSentence: function () {
-      emitter.emit('newSentence')
-      window.setTimeout(() => {
-        this.commitNewSentenceIntoArchive()
-      }, 600)
+      this.animateNewSentence()
     },
     animateNewSentence: function () {
       const that = this
@@ -118,20 +110,6 @@ export default {
         arr[i] = temp
       }
       return arr
-    },
-    commitNewSentenceIntoArchive () {
-      const text = this.$refs.sentenceEl.innerText
-      console.log(text)
-      if (this.oldSentence !== text) {
-        fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdeEI7TtUBkFGls8tRSGn157ibcJV4Nzhbo9FQprURg-W1Q7g/formResponse', {
-          method: 'POST',
-          body: new URLSearchParams({
-            'entry.835154031': text,
-            'entry.1283552648': window.location.href
-          })
-        })
-      }
-      this.oldSentence = text
     }
   },
   computed: {
@@ -143,6 +121,21 @@ export default {
       const gSheetId = this.$route.params.sheetId
       // return Object.is(gSheetId, undefined) ? 1 : gSheetId
       return gSheetId
+    },
+    allSentences: function () {
+      const maxLength = this.slotData.reduce((acc, slot) => {
+        return slot.length > acc ? slot.length : acc
+      }, 0)
+      console.log('maxLength', maxLength)
+      const allSentences = []
+      for (let i = 0; i < maxLength; i++) {
+        const sentence = this.slotData
+          .map(slot => slot[i])
+          .map(slot => slot === undefined ? '*' : slot)
+        allSentences.push(sentence)
+      }
+      console.log(allSentences)
+      return allSentences
     }
   }
 }

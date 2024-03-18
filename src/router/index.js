@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Generator from '@/views/Generator'
 import Archive from '@/views/Archive'
+import AllSentences from '@/views/AllSentences.vue'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/gen/:gid/:sheet',
     name: 'GeneratorID',
     component: Generator
+  },
+  {
+    path: '/all/:gid/:sheet',
+    name: 'AllID',
+    component: AllSentences
   },
   {
     path: '/about',
