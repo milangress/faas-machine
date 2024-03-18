@@ -11,6 +11,7 @@ div(class="home")
         SentencePart(:sentencesArray="slot" :bus="bus" :pos:="pos")
         |
         span.wordSpace &#32;&#8203;
+  hr
   // ul
     li(v-for="slot in slotData[0]") {{slot}}
   // div
