@@ -11,7 +11,7 @@ const routes = [
     redirect: to => {
       // the function receives the target route as the argument
       // we return a redirect path/location here.
-      return { path: '/gen/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU/BA%20FaaS%20Maschine' }
+      return { path: '/gen/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU/The%20original%20FaaS%20Machine' }
       // return { path: '/gen', params: { gid: '1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU', sheet: 'BA%20FaaS%20Maschine' } }
     }
     // alias: '/gen/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU/BA%20FaaS%20Maschine'
