@@ -11,7 +11,7 @@ div(class="home")
     //      |
     //      span.wordSpace &#32;&#8203;
     div(v-for='(sentence) in allSentences')
-      p {{sentence.join(' ')}}
+      p(v-html="sentence.join(' : ')")
       hr
   //hr
   //details
