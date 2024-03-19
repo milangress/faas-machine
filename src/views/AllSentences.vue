@@ -37,6 +37,7 @@ div(class="home")
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import SentencePart from '@/components/SentencePart'
+// import sanitizeHtml from 'sanitize-html'
 
 // const emitter = require('tiny-emitter/instance')
 
@@ -79,7 +80,9 @@ export default {
     loadSheet: async function () {
       const sheetData = await fetch(this.sheetURL).then(response => response.json())
       console.table(sheetData.values)
-      const removedHeadline = sheetData.values.map(column => column.slice(1))
+      const removedHeadline = sheetData.values
+        .map(column => column.slice(1))
+        // .map(column => column.filter(item => sanitizeHtml(item)))
       console.log(removedHeadline)
       this.slotData = []
       removedHeadline.forEach((column, pos) => {
