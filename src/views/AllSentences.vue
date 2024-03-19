@@ -11,7 +11,7 @@ div(class="home")
     //      |
     //      span.wordSpace &#32;&#8203;
     div(v-for='(sentence) in allSentences')
-      p(v-html="sentence.join(' : ')")
+      p(v-html="sentence.join(' ')")
       hr
   //hr
   //details
@@ -80,8 +80,19 @@ export default {
     loadSheet: async function () {
       const sheetData = await fetch(this.sheetURL).then(response => response.json())
       console.table(sheetData.values)
+      const maxLength = sheetData.values.reduce((acc, column) => {
+        return column.length > acc ? column.length : acc
+      }, 0)
+      console.log('maxLength', maxLength)
       const removedHeadline = sheetData.values
         .map(column => column.slice(1))
+        .map(column => {
+          if (column.length === 1) {
+            return Array(maxLength).fill(column[0])
+          } else {
+            return column
+          }
+        })
         // .map(column => column.filter(item => sanitizeHtml(item)))
       console.log(removedHeadline)
       this.slotData = []

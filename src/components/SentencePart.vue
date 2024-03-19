@@ -1,6 +1,5 @@
 <template>
-  <span v-on:click="animateNewSentence" :class="isSingleClassObject">
-    {{newSentenceArray[0]}}
+  <span v-on:click="animateNewSentence" :class="isSingleClassObject" v-html="newSentenceArray[0]">
   </span>
 </template>
 
