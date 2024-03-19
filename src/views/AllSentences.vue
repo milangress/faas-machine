@@ -83,12 +83,12 @@ export default {
       const maxLength = sheetData.values.reduce((acc, column) => {
         return column.length > acc ? column.length : acc
       }, 0)
-      console.log('maxLength', maxLength)
       const removedHeadline = sheetData.values
         .map(column => column.slice(1))
+        // fill the array if single/static entry
         .map(column => {
           if (column.length === 1) {
-            return Array(maxLength).fill(column[0])
+            return Array(maxLength - 1).fill(column[0])
           } else {
             return column
           }
