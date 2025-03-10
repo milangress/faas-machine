@@ -34,68 +34,73 @@ div(class="home")
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import SentencePart from '@/components/SentencePart'
+import HelloWorld from "@/components/HelloWorld.vue";
+import SentencePart from "@/components/SentencePart";
 
-const emitter = require('tiny-emitter/instance')
+const emitter = require("tiny-emitter/instance");
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     HelloWorld,
     SentencePart
   },
-  data: function () {
+  data: function() {
     return {
       sheetURL: `https://sheets.googleapis.com/v4/spreadsheets/${this.$route.params.gid}/values/${this.$route.params.sheet}!A1:Z1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`,
       // https://sheets.googleapis.com/v4/spreadsheets/1MuXLBM_WGHm9vS_jhAtDVKHGDK9FJ171fpkqwBXJIKU/values/BA%20FaaS%20Maschine!A1:E1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc
       sheetUrlEditable: `https://docs.google.com/spreadsheets/d/${this.$route.params.gid}/edit#gid=0`,
-      slotData: [['Loading', '…'], ['…', 'Loading']],
+      slotData: [
+        ["Loading", "…"],
+        ["…", "Loading"]
+      ],
       oldSentence: undefined
-    }
+    };
   },
-  mounted () {
-    this.loadSheet()
-    emitter.on('commitNewSentencePart', (pos, SentencePart) => {
-      console.log(pos, SentencePart)
+  mounted() {
+    this.loadSheet();
+    emitter.on("commitNewSentencePart", (pos, SentencePart) => {
+      console.log(pos, SentencePart);
       window.setTimeout(() => {
-        this.commitNewSentenceIntoArchive()
-      }, 200)
-    })
+        this.commitNewSentenceIntoArchive();
+      }, 200);
+    });
   },
   methods: {
-    changeWholeSentence: function () {
-      emitter.emit('newSentence')
+    changeWholeSentence: function() {
+      emitter.emit("newSentence");
       window.setTimeout(() => {
-        this.commitNewSentenceIntoArchive()
-      }, 600)
+        this.commitNewSentenceIntoArchive();
+      }, 600);
     },
-    animateNewSentence: function () {
-      const that = this
-      const mainLoopId = setInterval(function () {
-        that.randomizeSlotData()
-      }, 3)
+    animateNewSentence: function() {
+      const that = this;
+      const mainLoopId = setInterval(function() {
+        that.randomizeSlotData();
+      }, 3);
       window.setTimeout(() => {
-        clearInterval(mainLoopId)
-      }, 1000)
+        clearInterval(mainLoopId);
+      }, 1000);
     },
- // A function to randomize slot data in an array by shuffling each slot's content.
-    randomizeSlotData: function () {
+    // A function to randomize slot data in an array by shuffling each slot's content.
+    randomizeSlotData: function() {
       this.slotData.forEach((slot, pos) => {
-        this.slotData.splice(pos, 1, this.shuffleArray(slot))
-      })
+        this.slotData.splice(pos, 1, this.shuffleArray(slot));
+      });
     },
-    loadSheet: async function () {
-      this.sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${this.$route.params.gid}/values/${this.$route.params.sheet}!A1:Z1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`
-      const sheetData = await fetch(this.sheetURL).then(response => response.json())
-      console.table(sheetData.values)
-      const removedHeadline = sheetData.values.map(column => column.slice(1))
-      console.log(removedHeadline)
-      this.slotData = []
+    loadSheet: async function() {
+      this.sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${this.$route.params.gid}/values/${this.$route.params.sheet}!A1:Z1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`;
+      const sheetData = await fetch(this.sheetURL).then(response =>
+        response.json()
+      );
+      console.table(sheetData.values);
+      const removedHeadline = sheetData.values.map(column => column.slice(1));
+      console.log(removedHeadline);
+      this.slotData = [];
       removedHeadline.forEach((column, pos) => {
-        this.slotData.splice(pos, 1, this.shuffleArray(column))
-      })
-      this.changeWholeSentence()
+        this.slotData.splice(pos, 1, this.shuffleArray(column));
+      });
+      this.changeWholeSentence();
       // const entries = sheetData.feed.entry.filter(entry => entry.gs$cell.row !== '1')
       // const numberOfValidRows = [...new Set(entries.map(entry => entry.gs$cell.col))]
       // numberOfValidRows.forEach((item, pos) => {
@@ -108,46 +113,49 @@ export default {
       // })
       // this.changeWholeSentence()
     },
-    shuffleArray: function (arrParam) {
-      const arr = arrParam.slice()
-      let length = arr.length
-      let temp
-      let i
+    shuffleArray: function(arrParam) {
+      const arr = arrParam.slice();
+      let length = arr.length;
+      let temp;
+      let i;
       while (length) {
-        i = Math.floor(Math.random() * length--)
-        temp = arr[length]
-        arr[length] = arr[i]
-        arr[i] = temp
+        i = Math.floor(Math.random() * length--);
+        temp = arr[length];
+        arr[length] = arr[i];
+        arr[i] = temp;
       }
-      return arr
+      return arr;
     },
-    commitNewSentenceIntoArchive () {
-      const text = this.$refs.sentenceEl.innerText
-      console.log(text)
+    commitNewSentenceIntoArchive() {
+      const text = this.$refs.sentenceEl.innerText;
+      console.log(text);
       if (this.oldSentence !== text) {
-        fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdeEI7TtUBkFGls8tRSGn157ibcJV4Nzhbo9FQprURg-W1Q7g/formResponse', {
-          method: 'POST',
-          body: new URLSearchParams({
-            'entry.835154031': text,
-            'entry.1283552648': window.location.href
-          })
-        })
+        fetch(
+          "https://docs.google.com/forms/u/0/d/e/1FAIpQLSdeEI7TtUBkFGls8tRSGn157ibcJV4Nzhbo9FQprURg-W1Q7g/formResponse",
+          {
+            method: "POST",
+            body: new URLSearchParams({
+              "entry.835154031": text,
+              "entry.1283552648": window.location.href
+            })
+          }
+        );
       }
-      this.oldSentence = text
+      this.oldSentence = text;
     }
   },
   computed: {
-    currentSentence: function () {
-      const sentenceArray = this.slotData.map(slot => slot[0])
-      return sentenceArray.join(' ')
+    currentSentence: function() {
+      const sentenceArray = this.slotData.map(slot => slot[0]);
+      return sentenceArray.join(" ");
     },
-    gSheetID: function () {
-      const gSheetId = this.$route.params.sheetId
+    gSheetID: function() {
+      const gSheetId = this.$route.params.sheetId;
       // return Object.is(gSheetId, undefined) ? 1 : gSheetId
-      return gSheetId
+      return gSheetId;
     }
   }
-}
+};
 </script>
 
 <style lang="stylus">
