@@ -79,12 +79,14 @@ export default {
         clearInterval(mainLoopId)
       }, 1000)
     },
+ // A function to randomize slot data in an array by shuffling each slot's content.
     randomizeSlotData: function () {
       this.slotData.forEach((slot, pos) => {
         this.slotData.splice(pos, 1, this.shuffleArray(slot))
       })
     },
     loadSheet: async function () {
+      this.sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${this.$route.params.gid}/values/${this.$route.params.sheet}!A1:Z1001?majorDimension=COLUMNS&key=AIzaSyAV03L19A5_7wkchjcLIZFqErntE09gMrc`
       const sheetData = await fetch(this.sheetURL).then(response => response.json())
       console.table(sheetData.values)
       const removedHeadline = sheetData.values.map(column => column.slice(1))
